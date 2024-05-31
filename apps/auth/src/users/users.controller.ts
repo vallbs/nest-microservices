@@ -1,18 +1,34 @@
-import { Body, Controller, Delete, Get, Post, Req } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { Request } from 'express';
+import { CurrentUser } from '../decorators/current-user.decorator';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UserDocument } from './models/user.schema';
+import { UsersService } from './users.service';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    console.log(
-      'SOA> 🚀 ~ UsersController ~ create ~ createUserDto:',
-      createUserDto,
-    );
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    const user = await this.usersService.create(createUserDto);
+    console.log('UsersController ~ create ~ user:', user);
+
+    return user;
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  getUser(@CurrentUser() user: UserDocument) {
+    return user;
   }
 
   @Get()

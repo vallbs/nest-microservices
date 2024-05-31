@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UsersRepository } from './users.repository';
-import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcryptjs';
-import { log } from 'console';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UsersRepository } from './users.repository';
+import { GetUserDto } from './dto/get-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -17,6 +17,10 @@ export class UsersService {
 
   findAll() {
     return this.usersRepository.find({});
+  }
+
+  getUser(getUserDto: GetUserDto) {
+    return this.usersRepository.findOne(getUserDto);
   }
 
   delete(userId: string) {

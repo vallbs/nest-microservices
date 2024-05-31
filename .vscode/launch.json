@@ -5,27 +5,19 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "auth debug",
       "type": "node",
-      "request": "attach",
-      "name": "Docker: Attach to Auth Microservice",
-      "remoteRoot": "/usr/src/app",
+      "request": "attach", // launch attach
       "port": 9229,
+      "restart": true,
       "address": "localhost",
-      "localRoot": "${workspaceFolder}/apps/auth/src",
-      "protocol": "inspector",
-      "restart": true
+      // "localRoot": "${workspaceFolder}/apps/auth/src",
+      "localRoot": "${workspaceFolder}/apps/auth",
+      "remoteRoot": "/usr/src/app",
+      "outputCapture": "std",
+      "sourceMaps": true,
+      // "remoteRoot": "/",
+      "protocol": "inspector"
     }
-    // {
-    //   "type": "node",
-    //   "request": "attach",
-    //   "name": "Attach to Docker Microservice",
-    //   // "preLaunchTask": "tsc: build - tsconfig.json",
-    //   "port": 9229,
-    //   "address": "localhost",
-    //   "localRoot": "${workspaceFolder}",
-    //   "remoteRoot": "/usr/src/app",
-    //   "protocol": "inspector",
-    //   "skipFiles": ["<node_internals>/**"]
-    // }
   ]
 }
